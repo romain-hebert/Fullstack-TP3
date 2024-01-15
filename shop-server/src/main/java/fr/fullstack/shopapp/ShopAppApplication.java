@@ -1,7 +1,10 @@
 package fr.fullstack.shopapp;
 
+import fr.fullstack.shopapp.service.ShopService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.data.domain.Pageable;
 //import org.springframework.validation.Errors;
@@ -17,6 +20,16 @@ public class ShopAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ShopAppApplication.class, args);
+    }
+
+    @Bean
+    public CommandLineRunner commandLineRunner(
+        ShopService shopService
+    ) {
+        return args -> {
+            System.out.println("Hello World!");
+//            shopService.initElasticsearch();
+        };
     }
 
 //    @Bean
