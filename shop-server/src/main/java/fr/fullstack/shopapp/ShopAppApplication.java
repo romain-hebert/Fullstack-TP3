@@ -1,6 +1,8 @@
 package fr.fullstack.shopapp;
 
+import fr.fullstack.shopapp.service.Indexer;
 import fr.fullstack.shopapp.service.ShopService;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,12 +25,9 @@ public class ShopAppApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(
-        ShopService shopService
-    ) {
+    public ApplicationRunner buildIndex(Indexer indexer) {
         return args -> {
-            System.out.println("Hello World!");
-//            shopService.initElasticsearch();
+            indexer.index("fr.fullstack.shopapp.model.Shop");
         };
     }
 

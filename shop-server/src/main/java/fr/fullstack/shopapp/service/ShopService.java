@@ -2,7 +2,6 @@ package fr.fullstack.shopapp.service;
 
 import fr.fullstack.shopapp.model.Product;
 import fr.fullstack.shopapp.model.Shop;
-import fr.fullstack.shopapp.repository.ShopElasticRepository;
 import fr.fullstack.shopapp.repository.ShopRepository;
 import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.mapper.orm.Search;
@@ -26,9 +25,6 @@ public class ShopService {
 
     @Autowired
     private ShopRepository shopRepository;
-
-    @Autowired
-    private ShopElasticRepository shopElasticRepository;
 
     @Transactional
     public Shop createShop(Shop shop) throws Exception {
@@ -173,26 +169,22 @@ public class ShopService {
     }
 
     // Search with Elasticsearch
-
     public Page<Shop> searchShopByName(String name, Pageable pageable) {
-        return shopElasticRepository.findByName(name, pageable);
+        var searchResults = Search.session(em)
+            .search(Shop.class)
+            .where(f -> f.match()
+                .fields("name")
+                .matching(name)
+            ).fetchAll();
+        return searchResultsToPage(searchResults, pageable);
     }
-//    public Page<Shop> searchShopByName(String name, Pageable pageable) {
-//        var searchResults = Search.session(em)
-//            .search(Shop.class)
-//            .where(f -> f.match()
-//                .fields("name")
-//                .matching(name)
-//            ).fetchAll();
-//        return searchResultsToPage(searchResults, pageable);
-//    }
-//
-//    private Page<Shop> searchResultsToPage(SearchResult<Shop> searchResult, Pageable pageable) {
-//        List<Shop> shops = searchResult.hits();
-//        long totalHits = searchResult.total().hitCount();
-//        return PageableExecutionUtils.getPage(shops, pageable, () -> totalHits);
-//    }
-//
+
+    private Page<Shop> searchResultsToPage(SearchResult<Shop> searchResult, Pageable pageable) {
+        List<Shop> shops = searchResult.hits();
+        long totalHits = searchResult.total().hitCount();
+        return PageableExecutionUtils.getPage(shops, pageable, () -> totalHits);
+    }
+
 //    @Transactional
 //    public void initElasticsearch() throws InterruptedException {
 //        System.out.println("Init Elasticsearch");
