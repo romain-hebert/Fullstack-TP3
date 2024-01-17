@@ -146,4 +146,23 @@ public class ShopController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
+
+    @Operation(summary = "Search a shop by its name")
+    @GetMapping("/search")
+    public ResponseEntity<Page<Shop>> searchShopByName(
+            @Parameter(
+                    name = "name",
+                    description = "The name of the shop to search",
+                    example = "Shop 1"
+            ) @RequestParam String name,
+            Pageable pageable
+        ) {
+
+        try {
+            return ResponseEntity.ok().body(service.searchShopByName(name, pageable));
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+    }
 }
