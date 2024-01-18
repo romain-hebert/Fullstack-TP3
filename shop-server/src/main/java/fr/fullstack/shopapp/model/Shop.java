@@ -30,14 +30,14 @@ import java.util.List;
 @Entity
 @Table(name = "shops")
 @Indexed(index = "idx_shops")
-//@FilterDefs({
-//    @FilterDef(name = "createdAtAfter", parameters = @ParamDef(name = "createdAtAfter", type = LocalDate.class)),
-//    @FilterDef(name = "createdAtBefore", parameters = @ParamDef(name = "createdAtBefore", type = LocalDate.class))
-//})
-//@Filters({
-//    @Filter(name = "createdAtAfter", condition = ":createdAtAfter <= created_at"),
-//    @Filter(name = "createdAtBefore", condition = ":createdAtBefore >= created_at"),
-//})
+@FilterDefs({
+    @FilterDef(name = "createdAtAfter", parameters = @ParamDef(name = "createdAtAfter", type = LocalDate.class)),
+    @FilterDef(name = "createdAtBefore", parameters = @ParamDef(name = "createdAtBefore", type = LocalDate.class))
+})
+@Filters({
+    @Filter(name = "createdAtAfter", condition = ":createdAtAfter <= created_at"),
+    @Filter(name = "createdAtBefore", condition = ":createdAtBefore >= created_at"),
+})
 public class Shop {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

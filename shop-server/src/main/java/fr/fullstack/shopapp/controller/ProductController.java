@@ -83,15 +83,6 @@ public class ProductController {
                     example = "5"
             ),
     })
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "page",
-//                              dataType = "integer",
-//                              paramType = "query",
-//                              value = "Results page you want to retrieve (0..N)",
-//                              defaultValue = "0"),
-//            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-//                              value = "Number of records per page", defaultValue = "5"),
-//    })
     public ResponseEntity<Page<Product>> getProductsOfShop(
             Pageable pageable,
             @Parameter(
@@ -99,14 +90,12 @@ public class ProductController {
                     description = "Id of the shop",
                     example = "1"
             )
-//            @ApiParam(value = "Id of the shop", example = "1")
             @RequestParam(required = false) Optional<Long> shopId,
             @Parameter(
                     name = "categoryId",
                     description = "Id of the category",
                     example = "1"
             )
-//            @ApiParam(value = "Id of the category", example = "1")
             @RequestParam(required = false)
             Optional<Long> categoryId
     ) {

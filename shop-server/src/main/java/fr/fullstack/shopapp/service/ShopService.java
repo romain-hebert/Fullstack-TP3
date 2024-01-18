@@ -175,14 +175,13 @@ public class ShopService {
             .where(f -> f.match()
                 .fields("name")
                 .matching(name)
-            ).fetchAll();
+            ).fetchHits(pageable.getPageSize() * pageable.getPageNumber(), pageable.getPageSize());
         return searchResultsToPage(searchResults, pageable);
     }
 
-    private Page<Shop> searchResultsToPage(SearchResult<Shop> searchResult, Pageable pageable) {
-        List<Shop> shops = searchResult.hits();
-        long totalHits = searchResult.total().hitCount();
-        return PageableExecutionUtils.getPage(shops, pageable, () -> totalHits);
+    private Page<Shop> searchResultsToPage(List<Shop> searchResult, Pageable pageable) {
+        var totalHits = searchResult.size();
+        return PageableExecutionUtils.getPage(searchResult, pageable, () -> totalHits);
     }
 
 }

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import org.hibernate.search.mapper.orm.Search;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -140,6 +141,11 @@ public class ShopController {
                     description = "The name of the shop to search",
                     example = "Boutique"
             ) @RequestParam String name,
+            @Parameter(
+                    name = "page",
+                    description = "Results page you want to retrieve (0..N)",
+                    example = "{\"page\": 0, \"size\": 5}"
+            )
             Pageable pageable
         ) {
 

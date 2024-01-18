@@ -22,7 +22,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Table(name = "products")
 @Getter

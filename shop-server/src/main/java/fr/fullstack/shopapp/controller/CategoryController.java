@@ -76,15 +76,6 @@ public class CategoryController {
             )
         }
     )
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "page",
-//                              dataType = "integer",
-//                              paramType = "query",
-//                              value = "Results page you want to retrieve (0..N)",
-//                              defaultValue = "0"),
-//            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-//                              value = "Number of records per page", defaultValue = "5"),
-//    })
     public ResponseEntity<Page<Category>> getAllCategories(Pageable pageable) {
         return ResponseEntity.ok(service.getCategoryList(pageable));
     }
