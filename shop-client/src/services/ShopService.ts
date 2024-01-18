@@ -11,6 +11,10 @@ export function getShopsSorted(page: number, size: number, sort: string): Promis
     return axios.get(`${process.env.REACT_APP_API}/shops?page=${page}&size=${size}&sortBy=${sort}`);
 }
 
+export function searchShops(name: string, page: number, size: number, sort: string): Promise<ResponseArray<Shop>> {
+    return axios.get(`${process.env.REACT_APP_API}/shops/search?name=${name}&page=${page}&size=${size}&sort=${sort}`);
+}
+
 export function getShopsFiltered(page: number, size: number, urlFilters: string): Promise<ResponseArray<Shop>> {
     return axios.get(`${process.env.REACT_APP_API}/shops?page=${page}&size=${size}${urlFilters}`);
 }
