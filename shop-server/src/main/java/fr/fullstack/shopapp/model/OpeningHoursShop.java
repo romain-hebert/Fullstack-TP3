@@ -11,11 +11,17 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalTime;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "openingHours")
 public class OpeningHoursShop {
+
     @Column(nullable = false)
     @JsonFormat(pattern = "HH:mm:ss")
     @NotNull(message = "CloseAt may not be null")
@@ -36,35 +42,4 @@ public class OpeningHoursShop {
     @NotNull(message = "OpenAt may not be null")
     private LocalTime openAt;
 
-    public LocalTime getCloseAt() {
-        return closeAt;
-    }
-
-    public long getDay() {
-        return day;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public LocalTime getOpenAt() {
-        return openAt;
-    }
-
-    public void setCloseAt(LocalTime closeAt) {
-        this.closeAt = closeAt;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setOpenAt(LocalTime openAt) {
-        this.openAt = openAt;
-    }
 }

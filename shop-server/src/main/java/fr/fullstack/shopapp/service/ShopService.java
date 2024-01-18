@@ -175,22 +175,13 @@ public class ShopService {
             .where(f -> f.match()
                 .fields("name")
                 .matching(name)
-            ).fetchAll();
+            ).fetchHits(pageable.getPageSize() * pageable.getPageNumber(), pageable.getPageSize());
         return searchResultsToPage(searchResults, pageable);
     }
 
-    private Page<Shop> searchResultsToPage(SearchResult<Shop> searchResult, Pageable pageable) {
-        List<Shop> shops = searchResult.hits();
-        long totalHits = searchResult.total().hitCount();
-        return PageableExecutionUtils.getPage(shops, pageable, () -> totalHits);
+    private Page<Shop> searchResultsToPage(List<Shop> searchResult, Pageable pageable) {
+        var totalHits = searchResult.size();
+        return PageableExecutionUtils.getPage(searchResult, pageable, () -> totalHits);
     }
 
-//    @Transactional
-//    public void initElasticsearch() throws InterruptedException {
-//        System.out.println("Init Elasticsearch");
-//        var searchSession = Search.session(em);
-//        var indexer = searchSession.massIndexer(Shop.class);
-//        indexer.startAndWait();
-//        System.out.println("End init Elasticsearch");
-//    }
 }
