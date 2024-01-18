@@ -11,22 +11,30 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "openingHours")
 public class OpeningHoursShop {
+    @Getter
     @Column(nullable = false)
     @JsonFormat(pattern = "HH:mm:ss")
     @NotNull(message = "CloseAt may not be null")
     private LocalTime closeAt;
 
+    @Getter
+    @Setter
     @Column(nullable = false)
     @NotNull(message = "Day may not be null")
     @Min(value = 1, message = "Day should not be less than 1")
     @Max(value = 7, message = "Day should not be greater than 7")
     private int day;
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -36,18 +44,6 @@ public class OpeningHoursShop {
     @NotNull(message = "OpenAt may not be null")
     private LocalTime openAt;
 
-    public LocalTime getCloseAt() {
-        return closeAt;
-    }
-
-    public long getDay() {
-        return day;
-    }
-
-    public long getId() {
-        return id;
-    }
-
     public LocalTime getOpenAt() {
         return openAt;
     }
@@ -56,13 +52,6 @@ public class OpeningHoursShop {
         this.closeAt = closeAt;
     }
 
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public void setOpenAt(LocalTime openAt) {
         this.openAt = openAt;

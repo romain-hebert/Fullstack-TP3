@@ -30,7 +30,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/shops")
 public class ShopController {
-    // TODO ADD PLAIN TEXT SEARCH FOR SHOP
     @Autowired
     private ShopService service;
 
@@ -75,19 +74,8 @@ public class ShopController {
             )
         }
     )
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "page",
-//                              dataType = "integer",
-//                              paramType = "query",
-//                              value = "Results page you want to retrieve (0..N)",
-//                              defaultValue = "0"),
-//            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-//                              value = "Number of records per page", defaultValue = "5"),
-//    })
     public ResponseEntity<Page<Shop>> getAllShops(
             Pageable pageable,
-//            @ApiParam(value = "To sort the shops. Possible values are 'name', 'nbProducts' and 'createdAt'",
-//                      example = "name")
             @Parameter(
                     name = "sortBy",
                     description = "To sort the shops. Possible values are 'name', 'nbProducts' and 'createdAt'",
@@ -99,21 +87,18 @@ public class ShopController {
                     description = "Define that the shops must be in vacations or not",
                     example = "true"
             )
-//            @ApiParam(value = "Define that the shops must be in vacations or not", example = "true")
             @RequestParam(required = false) Optional<Boolean> inVacations,
             @Parameter(
                     name = "createdAfter",
                     description = "Define that the shops must be created after this date",
                     example = "2022-11-15"
             )
-//            @ApiParam(value = "Define that the shops must be created after this date", example = "2022-11-15")
             @RequestParam(required = false) Optional<String> createdAfter,
             @Parameter(
                     name = "createdBefore",
                     description = "Define that the shops must be created before this date",
                     example = "2022-11-15"
             )
-//            @ApiParam(value = "Define that the shops must be created before this date", example = "2022-11-15")
             @RequestParam(required = false) Optional<String> createdBefore
 
     ) {
@@ -153,7 +138,7 @@ public class ShopController {
             @Parameter(
                     name = "name",
                     description = "The name of the shop to search",
-                    example = "Shop 1"
+                    example = "Boutique"
             ) @RequestParam String name,
             Pageable pageable
         ) {

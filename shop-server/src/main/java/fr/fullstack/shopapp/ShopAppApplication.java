@@ -31,15 +31,4 @@ public class ShopAppApplication {
         };
     }
 
-//    @Bean
-//    public Docket api() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .ignoredParameterTypes(Errors.class, Pageable.class)
-//                .select()
-//                .apis(RequestHandlerSelectors.basePackage("fr.fullstack.shopapp.controller"))
-//                .paths(PathSelectors.any())
-//                .build();
-//    }
-
-
 }

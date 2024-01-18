@@ -185,12 +185,4 @@ public class ShopService {
         return PageableExecutionUtils.getPage(shops, pageable, () -> totalHits);
     }
 
-//    @Transactional
-//    public void initElasticsearch() throws InterruptedException {
-//        System.out.println("Init Elasticsearch");
-//        var searchSession = Search.session(em);
-//        var indexer = searchSession.massIndexer(Shop.class);
-//        indexer.startAndWait();
-//        System.out.println("End init Elasticsearch");
-//    }
 }
