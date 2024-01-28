@@ -57,6 +57,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=1234
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - ES_URL=elasticsearch:9200
+    restart: on-failure
 
   front:
     container_name: shop-client

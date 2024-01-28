@@ -16,11 +16,16 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "products")
+@Getter
+@Setter
 public class Product {
     @ManyToMany
     @JoinTable(
@@ -45,43 +50,4 @@ public class Product {
     @ManyToOne
     private Shop shop;
 
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public List<LocalizedProduct> getLocalizedProducts() {
-        return localizedProduct;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setLocalizedProducts(List<LocalizedProduct> localizedProduct) {
-        this.localizedProduct = localizedProduct;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
-    }
 }
