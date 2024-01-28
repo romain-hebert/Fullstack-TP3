@@ -1,17 +1,18 @@
 import {
-    Box,
+    Box, Button,
     Fab,
     FormControl,
-    Grid,
+    Grid, IconButton,
     InputLabel,
     MenuItem,
     Pagination,
     Select,
-    SelectChangeEvent,
+    SelectChangeEvent, TextField,
     Typography,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { useEffect, useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Filters, ShopCard } from '../components';
 import { useAppContext } from '../context';
@@ -48,6 +49,19 @@ const Home = () => {
             .finally(() => setLoading(false));
     };
 
+    const [searchQuery, setSearchQuery] = useState<string>('');
+
+    const handleSearch = () => {
+        setLoading(true);
+        ShopService.searchShops(searchQuery, pageSelected, 9, sort)
+            .then(res => {
+                setShops(res.data.content);
+                setCount(res.data.totalPages);
+                setPage(res.data.pageable.pageNumber + 1);
+            })
+            .finally(() => setLoading(false));
+    };
+
     useEffect(() => {
         getShops();
     }, [pageSelected, sort, filters]);
@@ -69,9 +83,29 @@ const Home = () => {
                     width: '100%',
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent: 'flex-end',
+                    justifyContent: 'space-between',
                 }}
             >
+                <FormControl
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <TextField
+                        label="Rechercher"
+                        variant="outlined"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        sx={{ minWidth: 200 }}
+                    />
+
+                    <Fab color="primary" aria-label="search">
+                        <SearchIcon onClick={handleSearch} />
+                    </Fab>
+                </FormControl>
+
                 <Fab variant="extended" color="primary" aria-label="add" onClick={() => navigate('/shop/create')}>
                     <AddIcon sx={{ mr: 1 }} />
                     Ajouter une boutique

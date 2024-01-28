@@ -10,7 +10,7 @@ import { formatterLocalizedProduct, priceFormatter } from '../utils';
 const ProductDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { setLoading, locale } = useAppContext();
+    const { setLoading, locale, currency } = useAppContext();
     const { setToast } = useToastContext();
     const [product, setProduct] = useState<Product | null>(null);
     const [formattedProduct, setFormattedProduct] = useState<FormattedProduct | null>();
@@ -26,8 +26,18 @@ const ProductDetails = () => {
     }, [id]);
 
     useEffect(() => {
-        product && setFormattedProduct(formatterLocalizedProduct(product, locale));
-    }, [locale, product]);
+        if (product) {
+            let updatedProduct = formatterLocalizedProduct(product, locale);
+            // Add logic to adjust the price based on the currency
+            if (currency === 'USD') {
+                updatedProduct = {
+                    ...updatedProduct,
+                    price: updatedProduct.price * 1.1, // Assuming 1.1 is the conversion rate
+                };
+            }
+            setFormattedProduct(updatedProduct);
+        }
+    }, [product, locale, currency]);
 
     const handleDelete = () => {
         setLoading(true);
@@ -64,7 +74,7 @@ const ProductDetails = () => {
             <Typography variant="h3" sx={{ textAlign: 'center', marginBottom: 3 }}>
                 {formattedProduct.name}
             </Typography>
-            <Typography variant="h6">Prix : {priceFormatter(formattedProduct.price)}</Typography>
+            <Typography variant="h6">Prix : {priceFormatter(formattedProduct.price, currency)}</Typography>
             {formattedProduct.description && (
                 <Typography sx={{ mt: 1.5 }} color="text.secondary">
                     Description : {formattedProduct.description}
