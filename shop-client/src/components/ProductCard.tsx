@@ -14,12 +14,22 @@ type Props = {
 
 const ProductCard = ({ product, displayShop = false }: Props) => {
     const navigate = useNavigate();
-    const { locale } = useAppContext();
+    const { locale, currency } = useAppContext();
     const [formattedProduct, setFormattedProduct] = useState<FormattedProduct>(
         formatterLocalizedProduct(product, locale),
     );
 
-    useEffect(() => setFormattedProduct(formatterLocalizedProduct(product, locale)), [locale]);
+    //useEffect(() => setFormattedProduct(formatterLocalizedProduct(product, locale)), [locale]);
+    useEffect(() => {
+        let updatedProduct = formatterLocalizedProduct(product, locale);
+        if (currency === 'USD') {
+            updatedProduct = {
+                ...updatedProduct,
+                price: updatedProduct.price * 1.1,
+            };
+        }
+        setFormattedProduct(updatedProduct);
+    }, [product, locale, currency]);
 
     return (
         <Card
@@ -30,7 +40,7 @@ const ProductCard = ({ product, displayShop = false }: Props) => {
                 <Typography variant="h4" color="text.primary" gutterBottom>
                     {formattedProduct.name}
                 </Typography>
-                <Typography variant="h6">Prix : {priceFormatter(formattedProduct.price)}</Typography>
+                <Typography variant="h6">Prix : {priceFormatter(formattedProduct.price, currency)}</Typography>
                 {formattedProduct.description && (
                     <Typography sx={{ mt: 1.5, maxHeight: 50, overflow: 'hidden' }} color="text.secondary">
                         {formattedProduct.description}

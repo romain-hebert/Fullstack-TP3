@@ -1,11 +1,14 @@
 import { createContext, useContext, useState } from 'react';
 import Locale from '../types/locale';
+import Currency from "../types/currency";
 
 interface AppContextInterface {
     loading: boolean;
     setLoading: (load: boolean) => void;
     locale: Locale;
     setLocale: (locale: Locale) => void;
+    currency: Currency;
+    setCurrency: (currency: Currency) => void;
 }
 
 const AppContext = createContext<AppContextInterface>({
@@ -17,6 +20,10 @@ const AppContext = createContext<AppContextInterface>({
     setLocale: () => {
         // empty function
     },
+    currency: Currency.EUR,
+    setCurrency: () => {
+        // empty function
+    },
 });
 
 type Props = {
@@ -26,6 +33,8 @@ type Props = {
 export function AppProvider({ children }: Props) {
     const [loading, setLoading] = useState<boolean>(false);
     const [locale, setLocale] = useState<Locale>(Locale.FR);
+    const [currency, setCurrency] = useState<Currency>(Currency.EUR);
+
 
     return (
         <AppContext.Provider
@@ -34,6 +43,8 @@ export function AppProvider({ children }: Props) {
                 setLoading,
                 locale,
                 setLocale,
+                currency,
+                setCurrency,
             }}
         >
             {children}

@@ -2,6 +2,7 @@ import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Loader from './Loader';
 import SwitchLanguage from './SwitchLanguage';
+import ChangeCurrency from "./ChangeCurrency";
 
 type Props = {
     children: JSX.Element;
@@ -33,6 +34,9 @@ const Layout = ({ children }: Props) => {
                     </Box>
                     <Box>
                         <SwitchLanguage />
+                    </Box>
+                    <Box>
+                        <ChangeCurrency />
                     </Box>
                 </Toolbar>
             </AppBar>
